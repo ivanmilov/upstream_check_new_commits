@@ -1,0 +1,33 @@
+name: 'Check forked Upstream for new commits'
+author: 'Ivan Milov'
+description: 'Checks whether original repo has new commits'
+
+inputs:
+  upstream_repository:
+    description: 'Upstream repository, e.g. => ivanmilov/upstream_check_new_commits'
+    required: true
+
+  upstream_branch:
+    description: 'Branch to sync from, e.g. => main, master, dev'
+    default: main
+    required: true
+
+  target_branch:
+    description: 'Branch to push to, e.g. => main, master, prod'
+    required: true
+
+outputs:
+  has_new_commits:
+    description: 'true when new commits were included in this sync'
+    value: ${{ steps.check.outputs.has_new_commits }}
+
+runs:
+  using: "composite"
+  steps:
+    - run: ${{ github.action_path }}/upstream_check.sh
+      id: check
+      env:
+        INPUT_UPSTREAM_REPOSITORY: ${{ inputs.upstream_repository }}
+        INPUT_UPSTREAM_BRANCH: ${{ inputs.upstream_branch }}
+        INPUT_TARGET_BRANCH: ${{ inputs.target_branch }}
+      shell: bash
