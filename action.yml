@@ -2,6 +2,10 @@ name: 'Check forked Upstream for new commits'
 author: 'Ivan Milov'
 description: 'Checks whether original repo has new commits'
 
+branding:
+  icon: arrow-down
+  color: white
+
 inputs:
   upstream_repository:
     description: 'Upstream repository, e.g. => ivanmilov/upstream_check_new_commits'
